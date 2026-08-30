@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cinemania - Home</title>
     <script type="module" crossorigin src="/goit-javascript-project/index.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-javascript-project/assets/hero-DQghbZ1x.js">
-    <link rel="stylesheet" crossorigin href="/goit-javascript-project/assets/hero-DrkHEpg5.css">
+    <link rel="modulepreload" crossorigin href="/goit-javascript-project/assets/hero-C2p3f7vr.js">
+    <link rel="stylesheet" crossorigin href="/goit-javascript-project/assets/hero-CZMtqDqj.css">
   </head>
   <body>
     <header class="header">
@@ -107,7 +107,24 @@
   </div>
 </section>
 
-      
+      <section class="weekly-trends">
+  <div class="container">
+    <div class="weekly-trends__header">
+      <h2 class="weekly-trends__title">Weekly Trends</h2>
+      <a class="weekly-trends__link" href="./catalog.html">See all</a>
+    </div>
+
+    <ul class="weekly-trends__list" data-weekly-list></ul>
+  </div>
+</section>
+
+<section class="upcoming">
+  <div class="container">
+    <h2 class="upcoming__section-title">Upcoming This Month</h2>
+
+    <div class="upcoming__content" data-upcoming></div>
+  </div>
+</section>
     </main>
 
     <div class="modal is-hidden" id="movie-modal" aria-hidden="true">
@@ -202,20 +219,19 @@
 
     <footer class="footer">
   <div class="container">
-    <p class="footer-desc">
-      Made with ✨ by
-      <a
-        class="footer-link"
-        href="https://goit.global/ua/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        GoIT team
-      </a>
+    <p class="footer__text">
+      © 2026 | All Rights Reserved |
+      <span class="footer__developed">
+        Developed with
+        <span class="footer__heart">♥</span>
+        by
+      </span>
+      <button class="footer__team-btn" type="button">
+        GoIT Students
+      </button>
     </p>
   </div>
 </footer>
-
 
   </body>
 </html>
