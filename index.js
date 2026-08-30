@@ -1,4 +1,4 @@
-import"./assets/modal-C5Bgeu1r.js";var e=document.querySelector(`[data-weekly-list]`),t=document.querySelector(`[data-upcoming]`);function n(e,t){e.innerHTML=`
+import"./assets/modal-QENN-JE3.js";var e=document.querySelector(`[data-weekly-list]`),t=document.querySelector(`[data-upcoming]`);function n(e,t){e.innerHTML=`
     <p class="home-error">
       ${t}
     </p>
