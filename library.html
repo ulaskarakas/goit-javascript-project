@@ -5,8 +5,9 @@
     <link rel="icon" type="image/svg+xml" href="/goit-javascript-project/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cinemania - My Library</title>
-    <script type="module" crossorigin src="/goit-javascript-project/assets/hero-C2p3f7vr.js"></script>
-    <link rel="stylesheet" crossorigin href="/goit-javascript-project/assets/hero-CZMtqDqj.css">
+    <script type="module" crossorigin src="/goit-javascript-project/library.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-javascript-project/assets/hero-DCHqEi2H.js">
+    <link rel="stylesheet" crossorigin href="/goit-javascript-project/assets/hero-JjoHOxwn.css">
   </head>
   <body>
     <header class="header">
@@ -106,7 +107,52 @@
   </div>
 </section>
 
-      
+      <div class="library-page">
+  <section class="library-content" aria-label="My movie library">
+    <div class="library-container">
+      <div class="library-toolbar">
+        <label class="visually-hidden" for="library-genre">Genre</label>
+
+        <select class="library-genre" id="library-genre" name="genre">
+          <option value="">Genre</option>
+        </select>
+      </div>
+
+      <ul class="library-movie-list"></ul>
+
+      <div class="library-empty" hidden>
+        <p>OOPS...</p>
+        <p>We are very sorry!</p>
+        <p>You don't have any movies at your library.</p>
+      </div>
+
+      <button class="library-load-more" type="button" hidden>Load more</button>
+    </div>
+  </section>
+
+  <button class="scroll-up is-hidden" type="button" aria-label="Scroll to top">
+    <svg class="scroll-up-icon" width="20" height="20">
+      <use href="/goit-javascript-project/assets/sprite-Do284pLE.svg#icon-arrow-up"></use>
+    </svg>
+  </button>
+
+  <template id="library-movie-card-template">
+    <li class="library-movie-card">
+      <img class="library-movie-card-image" src="" alt="" loading="lazy" />
+      <div class="library-movie-card-content">
+        <h2 class="library-movie-card-title"></h2>
+        <p class="library-movie-card-meta">
+          <span class="library-movie-card-genres"></span>
+          <span class="library-movie-card-year"></span>
+        </p>
+        <p class="library-movie-card-rating">
+          <span class="library-movie-card-rating-value"></span>
+        </p>
+      </div>
+    </li>
+  </template>
+</div>
+
     </main>
 
     <footer class="footer">

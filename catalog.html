@@ -5,8 +5,9 @@
     <link rel="icon" type="image/svg+xml" href="/goit-javascript-project/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cinemania - Catalog</title>
-    <script type="module" crossorigin src="/goit-javascript-project/assets/hero-C2p3f7vr.js"></script>
-    <link rel="stylesheet" crossorigin href="/goit-javascript-project/assets/hero-CZMtqDqj.css">
+    <script type="module" crossorigin src="/goit-javascript-project/catalog.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-javascript-project/assets/hero-DCHqEi2H.js">
+    <link rel="stylesheet" crossorigin href="/goit-javascript-project/assets/hero-JjoHOxwn.css">
   </head>
   <body>
     <header class="header">
@@ -106,7 +107,99 @@
   </div>
 </section>
 
-      
+      <div class="catalog-page">
+  <section class="catalog-search" aria-label="Movie search">
+    <div class="catalog-search-container">
+      <form class="catalog-search-form" id="catalog-search-form">
+        <div class="catalog-search-field">
+          <label class="visually-hidden" for="movie-query">
+            Search for a movie
+          </label>
+
+          <input
+            class="catalog-search-input"
+            id="movie-query"
+            name="query"
+            type="search"
+            placeholder="Search for a movie"
+            autocomplete="off"
+          />
+
+          <button
+            class="catalog-search-clear is-hidden"
+            type="button"
+            aria-label="Clear search"
+          >
+            X
+          </button>
+        </div>
+
+        <label class="visually-hidden" for="movie-year">Year</label>
+
+        <select class="catalog-search-year" id="movie-year" name="year">
+          <option value="">Year</option>
+        </select>
+
+        <button
+          class="catalog-search-submit"
+          type="submit"
+          aria-label="Search movies"
+        >
+          <svg class="catalog-search-submit-icon" width="18" height="18">
+            <use href="/goit-javascript-project/assets/sprite-Do284pLE.svg#icon-search"></use>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <section class="catalog-results" aria-live="polite" aria-busy="false">
+    <div class="catalog-results-container">
+      <ul class="movie-list"></ul>
+      <template id="catalog-movie-card-template">
+        <li class="movie-list-item">
+          <article class="movie-card">
+            <img class="movie-card-image" src="" alt="" />
+
+            <div class="movie-card-content">
+              <h2 class="movie-card-title"></h2>
+
+              <p class="movie-card-meta">
+                <span class="movie-card-genres"></span>
+                <span class="movie-card-year"></span>
+              </p>
+
+              <p class="movie-card-rating">
+                <span class="movie-card-rating-value"></span>
+              </p>
+            </div>
+          </article>
+        </li>
+      </template>
+
+      <div class="catalog-results-empty" hidden>
+        <p>OOPS...</p>
+        <p>We are very sorry!</p>
+        <p>We don't have any results matching your search.</p>
+      </div>
+
+      <nav class="pagination" aria-label="Catalog pages" hidden>
+        <ul class="pagination-list"></ul>
+      </nav>
+    </div>
+  </section>
+
+  <div class="loader is-hidden" role="status" aria-live="polite">
+    <span class="visually-hidden">Loading movies</span>
+  </div>
+
+  <button class="scroll-up is-hidden" type="button" aria-label="Scroll to top">
+    <svg class="scroll-up-icon" width="20" height="20">
+      <use href="/goit-javascript-project/assets/sprite-Do284pLE.svg#icon-arrow-up"></use>
+    </svg>
+  </button>
+</div>
+
     </main>
 
     <footer class="footer">
