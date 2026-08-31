@@ -5,9 +5,10 @@ const IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 const weeklyList = document.querySelector('[data-weekly-list]');
 const upcomingContainer = document.querySelector('[data-upcoming]');
 
-const LIBRARY_KEY = 'my-library';
+const LIBRARY_KEY = 'cinemania-library';
 
 let genresMap = new Map();
+let weeklyMovies = [];
 
 async function fetchFromTMDB(endpoint, params = {}) {
   const url = new URL(`${BASE_URL}${endpoint}`);
@@ -74,8 +75,12 @@ function getImageUrl(path, size = 'w500') {
 
 function createWeeklyMovieCard(movie) {
   const item = document.createElement('li');
+
   item.className = 'weekly-trends__item';
   item.dataset.movieId = movie.id;
+  item.setAttribute('role', 'button');
+  item.setAttribute('tabindex', '0');
+  item.setAttribute('aria-label', `View details for ${movie.title}`);
 
   const genres = getGenreNames(movie.genre_ids);
   const year = getMovieYear(movie.release_date);
@@ -122,12 +127,17 @@ function renderWeeklyMovies(movies) {
   weeklyList.innerHTML = '';
 
   if (!movies.length) {
+    weeklyMovies = [];
+
     weeklyList.innerHTML =
       '<li class="weekly-trends__empty">No trending movies found.</li>';
+
     return;
   }
 
   const visibleMovies = movies.slice(0, 3);
+
+  weeklyMovies = visibleMovies;
 
   visibleMovies.forEach(movie => {
     weeklyList.append(createWeeklyMovieCard(movie));
@@ -138,6 +148,47 @@ async function loadWeeklyTrends() {
   const data = await fetchFromTMDB('/trending/movie/week');
 
   renderWeeklyMovies(data.results || []);
+}
+
+function openMovieModal(movie) {
+  window.dispatchEvent(
+    new CustomEvent('open-movie-modal', {
+      detail: movie,
+    })
+  );
+}
+
+function getWeeklyMovieFromTarget(target) {
+  const movieCard = target.closest('.weekly-trends__item');
+
+  if (!movieCard) {
+    return null;
+  }
+
+  const movieId = Number(movieCard.dataset.movieId);
+
+  return weeklyMovies.find(movie => movie.id === movieId) || null;
+}
+
+function handleWeeklyMovieClick(event) {
+  const movie = getWeeklyMovieFromTarget(event.target);
+
+  if (movie) {
+    openMovieModal(movie);
+  }
+}
+
+function handleWeeklyMovieKeydown(event) {
+  if (event.key !== 'Enter' && event.key !== ' ') {
+    return;
+  }
+
+  const movie = getWeeklyMovieFromTarget(event.target);
+
+  if (movie) {
+    event.preventDefault();
+    openMovieModal(movie);
+  }
 }
 
 function getCurrentMonthUpcomingMovies(movies) {
@@ -165,6 +216,7 @@ function getRandomMovie(movies) {
   }
 
   const randomIndex = Math.floor(Math.random() * movies.length);
+
   return movies[randomIndex];
 }
 
@@ -212,12 +264,21 @@ function toggleMovieInLibrary(movie) {
   }
 
   saveLibraryMovies(libraryMovies);
+
+  window.dispatchEvent(
+    new CustomEvent('library-updated', {
+      detail: {
+        movie,
+        library: libraryMovies,
+      },
+    })
+  );
 }
 
 function getLibraryButtonText(movieId) {
   return isMovieInLibrary(movieId)
-    ? 'Remove from my library'
-    : 'Add to my library';
+    ? 'Remove from My Library'
+    : 'Add to My Library';
 }
 
 function renderUpcomingMovie(movie) {
@@ -227,6 +288,7 @@ function renderUpcomingMovie(movie) {
         There are no upcoming movies for this month.
       </p>
     `;
+
     return;
   }
 
@@ -236,7 +298,10 @@ function renderUpcomingMovie(movie) {
     <div class="upcoming__media">
       <img
         class="upcoming__image"
-        src="${getImageUrl(movie.backdrop_path || movie.poster_path, 'original')}"
+        src="${getImageUrl(
+          movie.backdrop_path || movie.poster_path,
+          'original'
+        )}"
         alt="${movie.title}"
       />
     </div>
@@ -365,5 +430,8 @@ async function initHome() {
     );
   }
 }
+
+weeklyList?.addEventListener('click', handleWeeklyMovieClick);
+weeklyList?.addEventListener('keydown', handleWeeklyMovieKeydown);
 
 initHome();
