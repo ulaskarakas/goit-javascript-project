@@ -10,12 +10,8 @@ const trailerModal = document.querySelector('#trailer-modal');
 const trailerModalOverlay = trailerModal?.querySelector(
   '.trailer-modal__overlay'
 );
-const trailerCloseButton = trailerModal?.querySelector(
-  '.trailer-modal__close'
-);
-const trailerVideo = trailerModal?.querySelector(
-  '.trailer-modal__video'
-);
+const trailerCloseButton = trailerModal?.querySelector('.trailer-modal__close');
+const trailerVideo = trailerModal?.querySelector('.trailer-modal__video');
 
 const poster = modal?.querySelector('.modal__poster');
 const title = modal?.querySelector('.modal__title');
@@ -64,8 +60,8 @@ function renderMovie(movie) {
 
   if (poster) {
     poster.src = movie.poster_path
-  ? `${IMAGE_BASE_URL}/w500${movie.poster_path}`
-  : '';
+      ? `${IMAGE_BASE_URL}/w500${movie.poster_path}`
+      : '';
     poster.alt = movie.title || 'Movie poster';
   }
 
@@ -86,8 +82,7 @@ function renderMovie(movie) {
   }
 
   if (overview) {
-    overview.textContent =
-      movie.overview || 'No description available.';
+    overview.textContent = movie.overview || 'No description available.';
   }
 
   updateLibraryButton();
@@ -101,6 +96,8 @@ function openModal() {
   modal.classList.remove('is-hidden');
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  
+  window.addEventListener('keydown', handleEscape);
 }
 
 function closeModal() {
@@ -111,6 +108,7 @@ function closeModal() {
   modal.classList.add('is-hidden');
   modal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+  window.removeEventListener('keydown', handleEscape);
 }
 
 function handleModalClose(event) {
@@ -129,9 +127,7 @@ function handleLibraryClick() {
   }
 
   const library = getLibrary();
-  const movieIndex = library.findIndex(
-    movie => movie.id === currentMovie.id
-  );
+  const movieIndex = library.findIndex(movie => movie.id === currentMovie.id);
 
   if (movieIndex === -1) {
     library.push(currentMovie);
@@ -164,7 +160,6 @@ async function fetchMovieDetails(movieId) {
   return response.json();
 }
 
-
 async function handleOpenMovieModal(event) {
   const movie = event.detail;
 
@@ -185,10 +180,7 @@ async function handleOpenMovieModal(event) {
   }
 }
 
-window.addEventListener(
-  'open-movie-modal',
-  handleOpenMovieModal
-);
+window.addEventListener('open-movie-modal', handleOpenMovieModal);
 
 modalOverlay?.addEventListener('click', handleModalClose);
 closeButton?.addEventListener('click', closeModal);
@@ -198,9 +190,6 @@ function handleEscape(event) {
     closeModal();
   }
 }
-
-
-window.addEventListener('keydown', handleEscape);
 
 function openTrailerModal(trailer) {
   if (!trailerModal || !trailerVideo || !trailer?.key) {
@@ -212,7 +201,8 @@ function openTrailerModal(trailer) {
   trailerModal.classList.remove('is-hidden');
   trailerModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
-}
+} 
+
 
 function closeTrailerModal() {
   if (!trailerModal || !trailerVideo) {
@@ -242,10 +232,6 @@ window.addEventListener('keydown', event => {
   }
 });
 
-window.addEventListener(
-  'open-trailer-modal',
-  event => {
-    openTrailerModal(event.detail);
-  }
-);
-
+window.addEventListener('open-trailer-modal', event => {
+  openTrailerModal(event.detail);
+});
