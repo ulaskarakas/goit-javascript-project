@@ -180,7 +180,7 @@ body.light-theme .mobile-menu-overlay {
   top: 0;
   left: 0;
   width: 204px;
-  height: 428px;
+  height: 100%;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
   z-index: 1000;
